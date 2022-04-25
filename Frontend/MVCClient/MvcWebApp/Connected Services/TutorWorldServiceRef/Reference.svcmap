@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6c42436f-8cb0-4942-aee8-26fb77d82193" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://localhost:8000/TutorWorld/UserService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost:8001/TutorWorld/AuthService/" Protocol="http" SourceId="2" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="67b89079-7ecb-4e13-b526-5fdf9d711017" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?disco" />
+    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="4e4e2a3e-6873-40fc-923c-f49a8dda4a8f" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="226cd3fd-7211-4f25-886b-4e9cdf3accbc" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd4" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="9e0a2f83-12e4-421a-88c4-0e8d6ac4fe85" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd1" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="e204c69f-97f3-49ae-8899-fa3775239f0c" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd5" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="272fdb69-9d07-4398-b802-91ba35c38bb8" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd0" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="144a77c8-c909-4632-8d57-0d9009565f6a" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd2" />
+    <MetadataFile FileName="item5.xsd" MetadataType="Schema" ID="562ccd03-6ac8-413d-b6e9-bbda1b907f34" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/?xsd=xsd3" />
+    <MetadataFile FileName="AuthService.wsdl" MetadataType="Wsdl" ID="abaed132-0211-432e-a32c-b156b94aad2a" SourceId="2" SourceUrl="https://localhost:8001/TutorWorld/AuthService/?wsdl" />
+    <MetadataFile FileName="item6.xsd" MetadataType="Schema" ID="6c3dab54-d6ce-4501-86a0-20e25f622c6b" SourceId="2" SourceUrl="https://localhost:8001/TutorWorld/AuthService/?xsd=xsd2" />
+    <MetadataFile FileName="item61.xsd" MetadataType="Schema" ID="95be6cfd-7309-41ea-8f7b-279dd4c462e6" SourceId="2" SourceUrl="https://localhost:8001/TutorWorld/AuthService/?xsd=xsd1" />
+    <MetadataFile FileName="item62.xsd" MetadataType="Schema" ID="5398edc5-7a72-42be-bd08-ec2bd9145263" SourceId="2" SourceUrl="https://localhost:8001/TutorWorld/AuthService/?xsd=xsd0" />
+    <MetadataFile FileName="item1.disco" MetadataType="Disco" ID="58684c4d-d8e5-4eec-993c-89163930f896" SourceId="2" SourceUrl="https://localhost:8001/TutorWorld/AuthService/?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

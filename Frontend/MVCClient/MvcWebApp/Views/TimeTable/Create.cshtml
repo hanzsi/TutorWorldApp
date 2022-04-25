@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Create Time Table";
+}
+
+<h2>Create</h2>
+<div>
+    <div id="error" class="alert alert-dismissable alert-danger hidden"></div>
+</div>
+<div class="days">
+    <h3>Days of the week</h3>
+    @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
+    {
+        <label class="checkbox-inline">
+            <input type="checkbox" name="day" value="@day"  />
+            @day
+        </label>
+    }
+</div>
+<hr />
+<div class="row">
+    <h3>Session times</h3>
+    <div class="timeslot-container">
+        <div class="col-md-1">
+            <input type="text" name="time" placeholder="HH:MM" class="form-control" />
+        </div>
+    </div>
+</div>
+<hr />
+<button id="continueBtn" class="btn btn-success btn-lg">Continue</button>
+<hr />
+<div id="exclSection" class="row hidden">
+    <h3>Excluded sessions</h3>
+    <div class="exclusion-container">
+
+    </div>
+   
+</div>
+
+
+@using (Html.BeginForm("Create", "TimeTable", FormMethod.Post, new { @class = "", id = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <button id="finishBtn" type="submit" class="btn btn-success btn-lg hidden">Finish</button>
+}
+
+@section scripts {
+    <script>
+        var markup = `
+        <div class="col-md-1">
+            <input type="text" name="time" placeholder="HH:MM" class="form-control" />
+        </div>`
+
+        $(".timeslot-container").on('keyup', 'div:last-child > input', function (e) {
+            var text = $(this).val()
+            if (text.length > 0) {
+                $(".timeslot-container").append(markup)
+            }
+        })
+
+        $("#continueBtn").click(function () {
+            var re = /\d\d:\d\d/i;
+            if (!$("input[name='day']:checked").length) {
+                showError('Please select at least one day')
+            }
+            else if (!$("input[name='time']").filter(function (i, el) { return $(el).val().match(re) }).length) {
+                showError("Please select enter at least one valid time slot")
+            } else {
+                $(this).addClass('disabled')
+                $("#exclSection").removeClass("hidden")
+                updateExclusionTable()
+                $("input[name='day']").each(function () { $(this).prop('disabled', true) })
+                $("input[name='time']").each(function () { $(this).prop('disabled', true) })
+                document.location.href += "#exclSection"
+                $("#finishBtn").removeClass('hidden')
+            }
+        })
+
+        function updateExclusionTable() {
+            $(".exclusion-container").empty();
+            slots = [];
+            let markup = '';
+            markup += "<div class='row'><div class='col-md-offset-1 col-md-8'>"
+            $("input[name='time']").each(function (j, ipt) {
+                if ($(ipt).val())
+                    markup += "<span class='column'>" + $(ipt).val() + "</span>"
+            })
+            markup += "</div></div>"
+            $("input[name='day']:checked").each(function (i, cb) {
+                var dayofweek = $(cb).val()
+                markup += '<div class="row"><div class="col-md-1">' + dayofweek + '</div><div class="col-md-8">'
+                $("input[name='time']").each(function (j, ipt) {
+                    let ses = $(ipt).val()
+                    if (ses) {
+                        markup += makeExclBtn(dayofweek, ses)
+                    }
+                })
+                markup += "</div></div>"
+            })
+            $(".exclusion-container").html(markup)
+        }
+
+        $(".exclusion-container").on('click', "button[name=excl-btn]", function () {
+            $(this).toggleClass('btn-danger')
+        })
+
+        $("#finishBtn").click(function () {
+            let idx = 0;
+            $("button[name='excl-btn']")
+                .filter(function () { return !$(this).hasClass('btn-danger') })
+                .each(function () {
+                    addSession(idx++, $(this).data('day'), $(this).data('time')) 
+            })
+        })
+
+        function makeExclBtn(dayofweek, time) {
+            return '<button name="excl-btn" class="btn btn-primary" data-day="' + dayofweek + '" data-time="' + time + '"><i class="fa fa-times" aria-hidden="true"></i></button>'
+        }
+
+        function addSession(idx, day, time) {
+            $("#form").append('<input type="hidden" name="[' + idx + '].DayOfWeek" value="' + day + '" />')
+            $("#form").append('<input type="hidden" name="[' + idx + '].Time" value="' + time + '" />')
+        }
+
+        function showError(text) {
+            $("#error").removeClass('hidden')
+            $("#error").text(text)
+        }
+
+    </script>
+}

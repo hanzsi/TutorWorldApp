@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7a2aae7f-f3c4-4c2f-9f11-0d813645824e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://localhost:8000/TutorWorld/UserService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="e5d5573f-19aa-4b31-8862-857365d268ab" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="e0c4261f-39f8-41f2-9679-8f66afe4c3d1" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="ModelLayer1.xsd" MetadataType="Schema" ID="411320f0-6a2c-47fb-b38f-ce12481b2eaa" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="System1.xsd" MetadataType="Schema" ID="e07e4178-fcf7-4fdd-9b50-f6aef6394df1" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="9373ef9d-e0a8-4cc7-aa11-9bd12687499c" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="ServiceLayer1.xsd" MetadataType="Schema" ID="c328bf3a-c52e-4ab5-95e2-e44122e6b599" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+    <MetadataFile FileName="System.ServiceModel.xsd" MetadataType="Schema" ID="18f07199-0756-45db-901b-ac2b5fbe3b9e" SourceId="1" SourceUrl="https://localhost:8000/TutorWorld/UserService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

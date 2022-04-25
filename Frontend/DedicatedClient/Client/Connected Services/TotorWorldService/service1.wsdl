@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:BootstrapPolicy>
+                  <wsp:Policy>
+                    <sp:SignedParts>
+                      <sp:Body />
+                      <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                      <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                    </sp:SignedParts>
+                    <sp:EncryptedParts>
+                      <sp:Body />
+                    </sp:EncryptedParts>
+                    <sp:TransportBinding>
+                      <wsp:Policy>
+                        <sp:TransportToken>
+                          <wsp:Policy>
+                            <sp:HttpsToken RequireClientCertificate="false" />
+                          </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                          <wsp:Policy>
+                            <sp:Basic256 />
+                          </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                          <wsp:Policy>
+                            <sp:Strict />
+                          </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp />
+                      </wsp:Policy>
+                    </sp:TransportBinding>
+                    <sp:SignedSupportingTokens>
+                      <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                          <wsp:Policy>
+                            <sp:WssUsernameToken10 />
+                          </wsp:Policy>
+                        </sp:UsernameToken>
+                      </wsp:Policy>
+                    </sp:SignedSupportingTokens>
+                    <sp:Wss11>
+                      <wsp:Policy />
+                    </sp:Wss11>
+                    <sp:Trust10>
+                      <wsp:Policy>
+                        <sp:MustSupportIssuedTokens />
+                        <sp:RequireClientEntropy />
+                        <sp:RequireServerEntropy />
+                      </wsp:Policy>
+                    </sp:Trust10>
+                  </wsp:Policy>
+                </sp:BootstrapPolicy>
+              </wsp:Policy>
+            </sp:SecureConversationToken>
+          </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ServiceLayer" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ModelLayer" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUserService_Update_InputMessage">
+    <wsdl:part name="parameters" element="tns:Update" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Update_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Update_UserFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/ServiceLayer" name="detail" element="q1:UserFault" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindTeacherById_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindTeacherById" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindTeacherById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindTeacherByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindTeacher_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindTeacher" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindTeacher_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindTeacherResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetTeacherList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTeacherList" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetTeacherList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTeacherListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindStudent_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindStudent" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FindStudent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindStudentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_CreateWorkDay_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWorkDay" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_CreateWorkDay_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateWorkDayResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Book_InputMessage">
+    <wsdl:part name="parameters" element="tns:Book" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Book_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Book_FaultExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q2:FaultException" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveBookedSession_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBookedSession" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveBookedSession_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBookedSessionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddSubject_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSubject" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddSubject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSubjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddSubject_SubjectErrorFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/ServiceLayer" name="detail" element="q3:SubjectError" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddSkillset_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSkillset" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddSkillset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSkillsetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveSkillset_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSkillset" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveSkillset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSkillsetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveSubject_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSubject" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveSubject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSubjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveSubject_SubjectErrorFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/ServiceLayer" name="detail" element="q4:SubjectError" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_CreateRating_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRating" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_CreateRating_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateRatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetRatingsBySubject_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRatingsBySubject" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetRatingsBySubject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRatingsBySubjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetDistinctSubjets_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDistinctSubjets" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetDistinctSubjets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDistinctSubjetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterBySubject_InputMessage">
+    <wsdl:part name="parameters" element="tns:FilterBySubject" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterBySubject_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FilterBySubjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterByPrice_InputMessage">
+    <wsdl:part name="parameters" element="tns:FilterByPrice" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterByPrice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FilterByPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterByPrice_UserFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/ServiceLayer" name="detail" element="q5:UserFault" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterByPostalCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:FilterByPostalCode" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_FilterByPostalCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FilterByPostalCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IUserService">
+    <wsdl:operation name="Update">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Update" message="tns:IUserService_Update_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateResponse" message="tns:IUserService_Update_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/UpdateUserFaultFault" name="UserFaultFault" message="tns:IUserService_Update_UserFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindTeacherById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FindTeacherById" message="tns:IUserService_FindTeacherById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FindTeacherByIdResponse" message="tns:IUserService_FindTeacherById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindTeacher">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FindTeacher" message="tns:IUserService_FindTeacher_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FindTeacherResponse" message="tns:IUserService_FindTeacher_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTeacherList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetTeacherList" message="tns:IUserService_GetTeacherList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetTeacherListResponse" message="tns:IUserService_GetTeacherList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindStudent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FindStudent" message="tns:IUserService_FindStudent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FindStudentResponse" message="tns:IUserService_FindStudent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateWorkDay">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/CreateWorkDay" message="tns:IUserService_CreateWorkDay_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/CreateWorkDayResponse" message="tns:IUserService_CreateWorkDay_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Book">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Book" message="tns:IUserService_Book_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/BookResponse" message="tns:IUserService_Book_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/BookFaultExceptionFault" name="FaultExceptionFault" message="tns:IUserService_Book_FaultExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBookedSession">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RemoveBookedSession" message="tns:IUserService_RemoveBookedSession_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RemoveBookedSessionResponse" message="tns:IUserService_RemoveBookedSession_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/AddSubject" message="tns:IUserService_AddSubject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/AddSubjectResponse" message="tns:IUserService_AddSubject_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/AddSubjectSubjectErrorFault" name="SubjectErrorFault" message="tns:IUserService_AddSubject_SubjectErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSkillset">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/AddSkillset" message="tns:IUserService_AddSkillset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/AddSkillsetResponse" message="tns:IUserService_AddSkillset_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSkillset">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RemoveSkillset" message="tns:IUserService_RemoveSkillset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RemoveSkillsetResponse" message="tns:IUserService_RemoveSkillset_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RemoveSubject" message="tns:IUserService_RemoveSubject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RemoveSubjectResponse" message="tns:IUserService_RemoveSubject_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/RemoveSubjectSubjectErrorFault" name="SubjectErrorFault" message="tns:IUserService_RemoveSubject_SubjectErrorFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRating">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/CreateRating" message="tns:IUserService_CreateRating_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/CreateRatingResponse" message="tns:IUserService_CreateRating_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRatingsBySubject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetRatingsBySubject" message="tns:IUserService_GetRatingsBySubject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetRatingsBySubjectResponse" message="tns:IUserService_GetRatingsBySubject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDistinctSubjets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetDistinctSubjets" message="tns:IUserService_GetDistinctSubjets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetDistinctSubjetsResponse" message="tns:IUserService_GetDistinctSubjets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FilterBySubject">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FilterBySubject" message="tns:IUserService_FilterBySubject_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FilterBySubjectResponse" message="tns:IUserService_FilterBySubject_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FilterByPrice">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FilterByPrice" message="tns:IUserService_FilterByPrice_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FilterByPriceResponse" message="tns:IUserService_FilterByPrice_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/FilterByPriceUserFaultFault" name="UserFaultFault" message="tns:IUserService_FilterByPrice_UserFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FilterByPostalCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/FilterByPostalCode" message="tns:IUserService_FilterByPostalCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/FilterByPostalCodeResponse" message="tns:IUserService_FilterByPostalCode_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IUserService" type="tns:IUserService">
+    <wsp:PolicyReference URI="#WSHttpBinding_IUserService_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Update">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/Update" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserFaultFault">
+        <soap12:fault use="literal" name="UserFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FindTeacherById">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FindTeacherById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindTeacher">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FindTeacher" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTeacherList">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/GetTeacherList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindStudent">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FindStudent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWorkDay">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/CreateWorkDay" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Book">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/Book" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FaultExceptionFault">
+        <soap12:fault use="literal" name="FaultExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBookedSession">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/RemoveBookedSession" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubject">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/AddSubject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SubjectErrorFault">
+        <soap12:fault use="literal" name="SubjectErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddSkillset">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/AddSkillset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSkillset">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/RemoveSkillset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSubject">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/RemoveSubject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SubjectErrorFault">
+        <soap12:fault use="literal" name="SubjectErrorFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRating">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/CreateRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRatingsBySubject">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/GetRatingsBySubject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDistinctSubjets">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/GetDistinctSubjets" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FilterBySubject">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FilterBySubject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FilterByPrice">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FilterByPrice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UserFaultFault">
+        <soap12:fault use="literal" name="UserFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FilterByPostalCode">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/FilterByPostalCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserService">
+    <wsdl:port name="WSHttpBinding_IUserService" binding="tns:WSHttpBinding_IUserService">
+      <soap12:address location="https://localhost:8000/TutorWorld/UserService/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>https://localhost:8000/TutorWorld/UserService/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

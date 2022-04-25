@@ -1,0 +1,36 @@
+﻿@model MvcWebApp.Models.AuthViewModel
+@{
+   
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form form-horizontal" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class ="control-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PasswordConfirm, new { @class = "control-label" })
+        @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <div class="radio">
+            @Html.RadioButtonFor(m => m.IsTeacher, true, new { @class = "" }) Teacher
+        </div>
+        <div class="radio">
+            @Html.RadioButtonFor(m => m.IsTeacher, false) Student
+        </div>
+    </div>
+   
+    <button type="submit" class="btn btn-success">Register</button>
+}

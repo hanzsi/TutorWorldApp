@@ -1,0 +1,76 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.flash-container {
+    margin-top: 10px;
+}
+
+.user-info-container {
+    margin-bottom: 20px;
+}
+
+.user-info-list {
+    list-style: none;
+}
+
+.user-info-list li {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(120, 120, 120, 0.37);
+}
+
+.bio-container {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.bio-title {
+    border-bottom: 1px solid rgba(85, 84, 251, 0.70);
+    padding-bottom: 15px;
+}
+
+.timeslot-container input {
+    padding: 5px;
+}
+
+.exclusion-container button, .column {
+    margin: 5px;
+}
+
+
+.timeslot-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.timeslot-list li {
+    padding: 10px 0px;
+}
+
+.workday {
+    float:left;
+    padding: 0px 20px;
+    margin: 0px 10px;
+}

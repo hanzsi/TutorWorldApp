@@ -1,0 +1,183 @@
+﻿@model MvcWebApp.TutorWorldServiceRef.Teacher
+
+@{
+    ViewBag.Title = "Details";
+    var IsAuthStudent = ViewData["AuthTeacher"] == null;
+    var WorkDays = ViewBag.WorkDays as MvcWebApp.Models.WorkDayViewModel[];
+    var WeekNumber = (int)ViewBag.Week;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Teacher @Model.FirstName @Model.LastName</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <div class="" style="width: 200px; height:200px;">
+                picture
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="user-info-container">
+                <h4>
+                    Information
+                    @if (Model.Id == ViewBag.AuthTeacher?.Id)
+                    {
+
+                        @Html.ActionLink("Edit", "Edit", null, new { @class = "pull-right" })
+
+                    }
+                </h4>
+                <ul class="user-info-list">
+                    <li><strong>Name: </strong>@Model.FirstName @Model.LastName</li>
+                    <li><strong>Education: </strong>@Model.EducationLevel</li>
+                    <li><strong>Location: </strong>@Model.PostalCode</li>
+                    <li><strong>Hourly Rate: </strong>@Model.HourlyPrice</li>
+                </ul>
+            </div>
+            <div class="user-info-container">
+                <h4>
+                    Taught Subjects
+                    @Html.ActionLink("Edit", "Edit", "Subject", new { @class = "pull-right" })
+                </h4>
+                <ul class="user-info-list">
+                    @foreach (var subject in Model.Subjects)
+                    {
+                        <li>
+                            <strong>@subject.SubjectName</strong>
+                            @foreach (var skill in subject.Skill)
+                            {
+                                <small>@skill.SkillName</small>
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bio-container">
+        <h4 class="bio-title">About Me</h4>
+        <p>@Model.Bio</p>
+    </div>
+    <hr />
+    <div class="">
+        <h4>Timetable</h4>
+        <div class="row">
+            <a href="?week=@(WeekNumber - 1)" class="btn btn-primary pull-left">Previous Week</a>
+            <a href="?week=@(WeekNumber + 1)" class="btn btn-primary pull-right">Next Week</a>
+        </div>
+        <div class="row">
+           @{ 
+               var subjectList = Model.Subjects.Select(s => new SelectListItem() { Text = s.SubjectName, Value = s.Id.ToString() });
+            }
+            @foreach (var workDay in WorkDays)
+            {
+                <div class='workday @(workDay.TimeSlots == null ? "bg-danger" : "" )'>
+                    <div>
+                        <h4>@workDay.DayOfWeek</h4> 
+                        <h5>@string.Format("{0:y-M-d}", workDay.Date)</h5>
+                        @if (workDay.TimeSlots != null)
+                        {
+                            <ul class="timeslot-list">
+                                @foreach (var timeSlot in workDay.TimeSlots)
+                                {
+                                    <li>
+                                        @if (IsAuthStudent)
+                                        {
+                                            if (timeSlot.BookSession == null)
+                                            {
+                                                <a class="btn btn-default" href='#' data-toggle="modal" data-target="#bookModal-@timeSlot.SlotId">
+                                                    @string.Format("{0:H:mm}", timeSlot.DateTime)
+                                                </a>
+                                                <div class="modal fade" id="bookModal-@timeSlot.SlotId" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Booking an appointment with Mr. @Model.FirstName</h4>
+                                                            </div>
+                                                            @using (Html.BeginForm("Create", "BookSession", FormMethod.Post, new { @class = "form-horizontal" }))
+                                                            {
+                                                                @Html.AntiForgeryToken()
+                                                                <div class="modal-body">
+                                                                    @Html.Hidden("SlotId", timeSlot.SlotId)
+                                                                    @Html.Hidden("TeacherId", Model.Id)
+                                                                    @Html.Hidden("WeekNumber", WeekNumber)
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Topic</label>
+                                                                        @Html.TextBox("Topic", "", new { @class = "form-control" })
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Subject</label>
+                                                                        @Html.DropDownList("SubjectId", subjectList, new { @class = "form-control" })
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">Comments(optional)</label>
+                                                                        @Html.TextArea("Comments", new { @class = "form-control" })
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Book</button>
+                                                                </div>
+                                                            }
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            <a class='btn btn-default @(timeSlot.BookSession != null  ? "btn-danger" : "")' href='#' @(timeSlot.BookSession != null ? "data-toggle=modal data-target=#bookInfo-" + timeSlot.SlotId : "")>
+                                                @string.Format("{0:H:mm}", timeSlot.DateTime)
+                                            </a>
+                                            if(timeSlot.BookSession != null)
+                                            {
+                                                <div class="modal fade" id="bookInfo-@timeSlot.SlotId" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Appointment information</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <ul class="user-info-list">
+                                                                    <li><strong>Topic: </strong>@timeSlot.BookSession.Topic</li>
+                                                                    <li><strong>Student: </strong> @Html.ActionLink(timeSlot.BookSession.Student.FirstName + " " + timeSlot.BookSession.Student.LastName, "Details", "Student", new {id = timeSlot.BookSession.Student.Id}, null)</li>
+                                                                    <li><strong>Subject: </strong>@timeSlot.BookSession.Subject.SubjectName</li>
+                                                                    <li><strong>Comments: </strong>@timeSlot.BookSession.Comments</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        }
+                                        
+                                    </li>
+                                    
+
+
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
